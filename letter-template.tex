@@ -1,0 +1,79 @@
+\documentclass[
+    paper=a4,
+    foldmarks=true,
+    foldmarks=BTm,
+    fromalign=right,
+    version=last,
+    parskip=full
+]{scrlttr2}
+
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphics}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+
+\usepackage[right]{eurosym}
+
+\makeatletter
+    \setlength{\@tempskipa}{-1.2cm}% Abstand zwischen Absender/Empfänger Zeilen
+    \@addtoplength{toaddrheight}{\@tempskipa}
+\makeatother
+
+\setlength{\oddsidemargin}{\useplength{toaddrhpos}}
+\addtolength{\oddsidemargin}{-1in}% Text gleich eingerückt wie Empfänger
+\setlength{\textwidth}{\useplength{firstheadwidth}}
+
+\begin{document}
+    \setkomavar{fromname}{$author$}
+    \renewcommand*{\raggedsignature}{\raggedright}
+
+    %\setkomavar{backaddressseparator}{~$$\cdot$$\,}% Trennzeichen Absender
+    \setkomavar{fromaddress}{%
+        $for(return-address)$
+            \,$return-address$$sep$\\
+        $endfor$
+    }
+
+    \setkomavar{date}{\today}
+    \setkomavar{location}{
+        $if(ref)$
+        \vspace*{15.5mm}
+        \raggedleft
+
+        {\scriptsize\textsc{Ihr Zeichen}} \\
+        $ref$
+        $endif$
+    }
+
+    \setkomavar{subject}{$subject$}
+
+    \setkomavar{signature}{
+        \vspace{2em}% Platz für Unterschrift
+
+        $author$
+    }
+
+    \begin{letter}{%
+        $for(address)$
+            $address$$sep$\\
+        $endfor$
+    }
+
+        \opening{$opening$}
+
+        $body$
+
+        \closing{$closing$}
+        
+        \vspace*{\fill}
+
+        $if(encludes)$
+            \setkomavar*{enclseparator}{Anlagen}
+            \encl{$encludes$}
+        $endif$
+    \end{letter}
+\end{document}
